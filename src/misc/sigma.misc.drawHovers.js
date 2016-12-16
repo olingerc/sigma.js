@@ -71,7 +71,11 @@
       self.contexts.hover.clearRect(0, 0, c.width, c.height);
 
       // Node render: single hover
-      if (
+      /*
+      Chris HACK, do not render nodes on hover
+      I comment out the following two ifs
+      */
+      /*if (
         embedSettings('enableHovering') &&
         embedSettings('singleHover') &&
         Object.keys(hoveredNodes).length
@@ -86,10 +90,10 @@
           self.contexts.hover,
           embedSettings
         );
-      }
+    }*/
 
       // Node render: multiple hover
-      if (
+      /*if (
         embedSettings('enableHovering') &&
         !embedSettings('singleHover')
       )
@@ -103,7 +107,7 @@
             self.contexts.hover,
             embedSettings
           );
-
+      */
       // Edge render: single hover
       if (
         embedSettings('enableEdgeHovering') &&
@@ -113,6 +117,15 @@
         hoveredEdge = hoveredEdges[Object.keys(hoveredEdges)[0]];
         source = self.graph.nodes(hoveredEdge.source);
         target = self.graph.nodes(hoveredEdge.target);
+
+        /*
+        Chris HACK:
+        If I remove a node but with edge still hvered (edge precision high)
+        the source or target no longer exists here
+        */
+        if (!source || !target) {
+            return;
+        }
 
         if (! hoveredEdge.hidden) {
           (
@@ -143,6 +156,8 @@
             // Avoid edges rendered over nodes:
             (
               sigma.canvas.nodes[source.type] ||
+              // Chris HACK, actually adding defaultNodeType here fixes a sigma bug
+              nodeRenderers[defaultNodeType] ||
               sigma.canvas.nodes.def
             ) (
               source,
@@ -151,6 +166,8 @@
             );
             (
               sigma.canvas.nodes[target.type] ||
+              // Chris HACK, actually adding defaultNodeType here fixes a sigma bug
+              nodeRenderers[defaultNodeType] ||
               sigma.canvas.nodes.def
             ) (
               target,

@@ -31,9 +31,9 @@
 
     var fontSize,
         sSize = source[prefix + 'size'],
-        sX = source[prefix + 'x'],
+        sX = source[prefix + 'x'] + (source[prefix + 'w'] / 2), //changed CHRIS HACK
         sY = source[prefix + 'y'],
-        tX = target[prefix + 'x'],
+        tX = target[prefix + 'x'] - (target[prefix + 'w'] / 2), //changed CHRIS HACK
         tY = target[prefix + 'y'],
         dX = tX - sX,
         dY = tY - sY,
@@ -70,7 +70,7 @@
 
     context.save();
 
-    
+
     if (edge.active) {
       context.font = [
         settings('activeFontStyle'),

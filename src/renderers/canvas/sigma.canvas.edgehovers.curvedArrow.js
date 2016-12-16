@@ -14,6 +14,11 @@
    */
   sigma.canvas.edgehovers.curvedArrow =
     function(edge, source, target, context, settings) {
+    /*
+    Chris HACK:
+    If I remove a node but with edge still hvered (edge precision high)
+    the source or target no longer exists here
+    */
     var color = edge.color,
         prefix = settings('prefix') || '',
         edgeColor = settings('edgeColor'),
@@ -22,9 +27,10 @@
         cp = {},
         size = settings('edgeHoverSizeRatio') * (edge[prefix + 'size'] || 1),
         tSize = target[prefix + 'size'],
-        sX = source[prefix + 'x'],
+        // CHRIS HACK: redifined start/end points
+        sX = source[prefix + 'x'] + (source[prefix + 'w'] / 2),
         sY = source[prefix + 'y'],
-        tX = target[prefix + 'x'],
+        tX = target[prefix + 'x'] - (target[prefix + 'w'] / 2),
         tY = target[prefix + 'y'],
         d,
         aSize,

@@ -21,10 +21,11 @@
         defaultEdgeColor = settings('defaultEdgeColor'),
         size = edge[prefix + 'size'] || 1,
         tSize = target[prefix + 'size'],
-        sX = source[prefix + 'x'],
+        // CHRIS HACK: redifined start/end points
+        sX = source[prefix + 'x'] + (source[prefix + 'w'] / 2),
         sY = source[prefix + 'y'],
-        tX = target[prefix + 'x'],
-        tY = target[prefix + 'y'];
+        tX = target[prefix + 'x'] - (target[prefix + 'w'] / 2),
+        tY = target[prefix + 'y'],
 
     size = (edge.hover) ?
       settings('edgeHoverSizeRatio') * size : size;

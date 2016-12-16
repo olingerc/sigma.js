@@ -23,6 +23,10 @@
         self = this;
 
     function getNodes(e) {
+        /*
+        Chris HACK
+        Adapt detection to square nodes
+        */
       if (e) {
         mX = 'x' in e.data ? e.data.x : mX;
         mY = 'y' in e.data ? e.data.y : mY;
@@ -43,10 +47,10 @@
             mX,
             mY
           ),
-          nodes = self.camera.quadtree.point(
+          nodes = /*self.camera.quadtree.point(
             point.x,
             point.y
-          );
+        )*/self.graph.nodes() //HACK, this is not optimal, but the quadtree did not contain all nodes I needed;
 
       if (nodes.length)
         for (i = 0, l = nodes.length; i < l; i++) {
@@ -173,21 +177,23 @@
           // Then, let's check if the mouse is on the edge (we suppose that it
           // is a line segment).
 
+          // CHRIS HACK: adapt edge detection to my boxes
+
           if (
             !edge.hidden &&
             !source.hidden && !target.hidden &&
             (!isCanvas ||
               (nodeIndex[edge.source] || nodeIndex[edge.target])) &&
             sigma.utils.getDistance(
-              source[prefix + 'x'],
+              source[prefix + 'x'] + (source[prefix + 'w'] / 2), //changed CHRIS HACK
               source[prefix + 'y'],
               modifiedX,
               modifiedY) > source[prefix + 'size'] &&
             sigma.utils.getDistance(
-              target[prefix + 'x'],
+              target[prefix + 'x'] - (target[prefix + 'w'] / 2), //changed CHRIS HACK
               target[prefix + 'y'],
               modifiedX,
-              modifiedY) > target[prefix + 'size']
+              modifiedY) > target[prefix + 'size'] //TODO CHRIS: adapt this to boxes
           ) {
             if (edge.type == 'curve' || edge.type == 'curvedArrow') {
               if (source.id === target.id) {
@@ -200,9 +206,9 @@
                   sigma.utils.isPointOnBezierCurve(
                   modifiedX,
                   modifiedY,
-                  source[prefix + 'x'],
+                  source[prefix + 'x'] + (source[prefix + 'w'] / 2), //changed CHRIS HACK
                   source[prefix + 'y'],
-                  target[prefix + 'x'],
+                  target[prefix + 'x'] - (target[prefix + 'w'] / 2), //changed CHRIS HACK
                   target[prefix + 'y'],
                   cp.x1,
                   cp.y1,
@@ -215,17 +221,17 @@
               }
               else {
                 cp = sigma.utils.getQuadraticControlPoint(
-                  source[prefix + 'x'],
+                  source[prefix + 'x'] + (source[prefix + 'w'] / 2), //changed CHRIS HACK
                   source[prefix + 'y'],
-                  target[prefix + 'x'],
+                  target[prefix + 'x'] - (target[prefix + 'w'] / 2), //changed CHRIS HACK
                   target[prefix + 'y']);
                 if (
                   sigma.utils.isPointOnQuadraticCurve(
                   modifiedX,
                   modifiedY,
-                  source[prefix + 'x'],
+                  source[prefix + 'x'] + (source[prefix + 'w'] / 2), //changed CHRIS HACK
                   source[prefix + 'y'],
-                  target[prefix + 'x'],
+                  target[prefix + 'x'] - (target[prefix + 'w'] / 2), //changed CHRIS HACK
                   target[prefix + 'y'],
                   cp.x,
                   cp.y,
@@ -238,9 +244,9 @@
                 sigma.utils.isPointOnSegment(
                 modifiedX,
                 modifiedY,
-                source[prefix + 'x'],
+                source[prefix + 'x'] + (source[prefix + 'w'] / 2), //changed
                 source[prefix + 'y'],
-                target[prefix + 'x'],
+                target[prefix + 'x'] - (target[prefix + 'w'] / 2), //changed
                 target[prefix + 'y'],
                 Math.max(s, maxEpsilon)
               )) {

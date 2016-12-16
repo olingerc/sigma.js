@@ -1,3 +1,4 @@
+require("../sigma.require.js");
 /**
  * This plugin provides a method to drag & drop nodes. Check the
  * sigma.plugins.dragNodes function doc or the examples/basic.html &
@@ -147,6 +148,14 @@
     };
 
     function nodeMouseDown(event) {
+        /*
+        Chris HACK
+        check for left mouse button
+        */
+        if (event.which !== 1) {
+            return;
+        }
+
       _isMouseDown = true;
       var size = _s.graph.nodes().length;
 

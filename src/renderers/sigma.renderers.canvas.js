@@ -161,6 +161,68 @@
     // Clear canvases:
     this.clear();
 
+    /*
+
+    CHRIS DRAW CATGEGORIES
+    HACK
+
+    */
+    var self = this;
+    var categories = this.settings(options, 'categories');
+    var xStep = this.settings(options, 'xStep');
+    var ctx = this.contexts.scene;
+
+    // Box specs
+    var width = 150;
+    var boxColor = '#f3f3f3';
+    var hoveredBoxColor = '#e3e3e3';
+
+    // Text specs
+    var fixedTopMargin = 15;
+    var fontSize = 10;
+    var textColor = '#999';
+
+    // Convert to current view
+    var categoryBoxes = [];
+    var categoryNode;
+    width = width / this.camera.ratio;
+    categories.forEach(function(category) {
+        categoryNode = nodes(category.short);
+        if (categoryNode) {
+            categoryBoxes.push({
+                x: categoryNode['renderer1:x'] - (width / 2),
+                width: width,
+                color: category.draggedOn ? hoveredBoxColor : boxColor,
+                label: category.long
+            });
+            category.span = [categoryNode['renderer1:x'] - (width / 2), categoryNode['renderer1:x'] + (width / 2)];
+        }
+    });
+
+    // Draw
+    categoryBoxes.forEach(function(categoryBox) {
+        ctx.fillStyle = categoryBox.color;
+        ctx.fillRect(
+            categoryBox.x,
+            0,
+            categoryBox.width,
+            self.height - 1 // always fill entire view except border
+        );
+        ctx.font = fontSize + 'px Arial';
+        ctx.textAlign = 'center';
+        ctx.fillStyle = textColor;
+        ctx.fillText(categoryBox.label, categoryBox.x + (categoryBox.width / 2), fixedTopMargin);
+    });
+
+    // reset context for later sigma draws
+    ctx.textAlign = 'left';
+    /*
+
+    CHRIS END
+    HACK
+
+    */
+
     // Kill running jobs:
     for (k in this.jobs)
       if (conrad.hasJob(k))

@@ -20,9 +20,10 @@
         defaultEdgeColor = settings('defaultEdgeColor'),
         size = edge[prefix + 'size'] || 1,
         tSize = target[prefix + 'size'],
-        sX = source[prefix + 'x'],
+        // CHRIS HACK: redifined start/end points
+        sX = source[prefix + 'x'] + (source[prefix + 'w'] / 2),
         sY = source[prefix + 'y'],
-        tX = target[prefix + 'x'],
+        tX = target[prefix + 'x'] - (target[prefix + 'w'] / 2),
         tY = target[prefix + 'y'],
         aSize = Math.max(size * 2.5, settings('minArrowSize')),
         d = Math.sqrt(Math.pow(tX - sX, 2) + Math.pow(tY - sY, 2)),
