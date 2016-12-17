@@ -1,4 +1,3 @@
-require("../sigma.require.js");
 /**
  * This plugin provides a method to drag & drop nodes. Check the
  * sigma.plugins.dragNodes function doc or the examples/basic.html &
