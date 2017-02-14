@@ -190,12 +190,12 @@
         categoryNode = nodes(category.short);
         if (categoryNode) {
             categoryBoxes.push({
-                x: categoryNode['renderer1:x'] - (width / 2),
+                x: categoryNode[prefix + 'x'] - (width / 2),
                 width: width,
                 color: category.draggedOn ? hoveredBoxColor : boxColor,
                 label: category.long
             });
-            category.span = [categoryNode['renderer1:x'] - (width / 2), categoryNode['renderer1:x'] + (width / 2)];
+            category.span = [categoryNode[prefix + 'x'] - (width / 2), categoryNode[prefix + 'x'] + (width / 2)];
         }
     });
 
