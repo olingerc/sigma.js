@@ -39,6 +39,8 @@
           x,
           y,
           s,
+          w, // HACK chris add width
+          h, // HACK chris add height
           inserted,
           selected = [],
           modifiedX = mX + self.width / 2,
@@ -58,9 +60,10 @@
           x = n[prefix + 'x'];
           y = n[prefix + 'y'];
           s = n[prefix + 'size'];
+          w = n[prefix + 'w']; // HACK chris get my width
+          h = n[prefix + 'h']; // HACK chris get my height
 
-          if (
-            !n.hidden &&
+          /* ORIGINAL
             modifiedX > x - s &&
             modifiedX < x + s &&
             modifiedY > y - s &&
@@ -69,6 +72,13 @@
               Math.pow(modifiedX - x, 2) +
               Math.pow(modifiedY - y, 2)
             ) < s
+          */
+          // HACK chris: the below is now for square nodes
+          if (
+            modifiedX > x - w/2 &&
+            modifiedX < x + w/2 &&
+            modifiedY > y - h/2 &&
+            modifiedY < y + h/2
           ) {
             // Insert the node:
             inserted = false;
