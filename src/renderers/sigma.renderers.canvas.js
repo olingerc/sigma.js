@@ -199,6 +199,10 @@
         }
     });
 
+    // Update sigma settings with coordinates info
+    // to allow client to check if dragging over category
+    sigma.settings.categories = categories;
+
     // Draw
     categoryBoxes.forEach(function(categoryBox) {
         ctx.fillStyle = categoryBox.color;
