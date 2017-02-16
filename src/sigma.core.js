@@ -505,6 +505,8 @@
         this.renderersPerCamera[c.id] &&
         this.renderersPerCamera[c.id].length
       )
+        // CHRIS NOTE: Here the read_camx... properties are added, I skip this and go directly to camera.applyView to add my stuff
+        // CHRIS TODO: add fontsize in my nodes and have width calulated somewhere in the rescale or camera.applyView functions
         sigma.middlewares.rescale.call(
           this,
           a.length ? 'ready:' : '',

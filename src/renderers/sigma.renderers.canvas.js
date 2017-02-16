@@ -149,6 +149,8 @@
         drawEdges = false;
 
     // Apply the camera's view:
+    // CHRIS NOTE: Here the cam stuff is converted into renderer stuff
+    // CHRIS TODO: transform my width as well
     this.camera.applyView(
       undefined,
       this.options.prefix,
