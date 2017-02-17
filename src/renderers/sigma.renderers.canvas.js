@@ -170,7 +170,7 @@
 
     */
     var self = this;
-    var categories = this.settings(options, 'categories');
+    var categories = sigma.settings.categories; // using this.settings(...) does not have the up to date version
     var xStep = this.settings(options, 'xStep');
     var ctx = this.contexts.scene;
 
